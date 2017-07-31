@@ -33,7 +33,7 @@ public class ResultSetToArrayServlet extends HttpServlet {
 		try {
 			// Register JDBC driver
 			Class.forName(JDBC_DRIVER);
-			System.out.print("JDBC_DRIVER registered...");
+			System.out.println("JDBC_DRIVER registered...");
 			
 			// Open connection
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);
