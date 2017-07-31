@@ -29,10 +29,11 @@ import javax.servlet.http.*;
    */
 
 public class MVCServlet extends HttpServlet {
-
+	
+	
 	// Hanlde HTTP GET request
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		
 		// MVC pattern (MODEL for data, VIEW for UI, CONTROLLER for business
 		// logics)
 

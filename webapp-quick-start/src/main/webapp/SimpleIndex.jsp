@@ -5,7 +5,7 @@
 
 <body>
 	<h2>Hello World!</h2>
-	<form action="/webapp-quick-start/hello" method="post">
+	<form action="/webapp-quick-start/simple" method="post">
 		Task: <input type="text" name="Task" /> First Name: <input
 			type="text" name="First Name" /> Last Name: <input type="text"
 			name="Last Name" /> <input type="submit" />
