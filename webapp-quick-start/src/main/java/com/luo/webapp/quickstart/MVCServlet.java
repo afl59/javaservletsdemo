@@ -29,11 +29,10 @@ import javax.servlet.http.*;
    */
 
 public class MVCServlet extends HttpServlet {
-	
-	
+
 	// Hanlde HTTP GET request
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		// MVC pattern (MODEL for data, VIEW for UI, CONTROLLER for business
 		// logics)
 
@@ -45,7 +44,7 @@ public class MVCServlet extends HttpServlet {
 		// to join them)
 		String query = request.getParameter("query");
 
-		// Validate input, such as preventing SQL injection
+		// Validate input as to prevent SQL injection
 
 		// Call MODEL code (JDBC code) to get or update data
 

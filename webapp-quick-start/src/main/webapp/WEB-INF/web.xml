@@ -16,6 +16,10 @@
 		<servlet-name>ConversionServlet</servlet-name>
 		<servlet-class>com.luo.webapp.quickstart.ResultSetToArrayServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>TaskServlet</servlet-name>
+		<servlet-class>com.luo.webapp.quickstart.TaskServlet</servlet-class>
+	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>SimpleServlet</servlet-name>
@@ -27,6 +31,10 @@
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>ConversionServlet</servlet-name>
+		<url-pattern>/convert</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>TaskServlet</servlet-name>
 		<url-pattern>/task</url-pattern>
 	</servlet-mapping>
 </web-app>

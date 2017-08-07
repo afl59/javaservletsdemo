@@ -29,49 +29,52 @@ import java.util.Date;
    com.lei.webapp.quickstart.HelloServlet
 */
 public class SimpleServlet extends HttpServlet {
-	// JDBC driver name and database URL
+	
+	// Set JDBC variables
 	static final String JDBC_DRIVER = "org.apache.derby.jdbc.ClientDriver";
 	static final String DB_URL = "jdbc:derby://localhost:1527/seconddb;create=true";
 
-	// Database credentials
+	// Set database credentials
 	static final String USER = null;
 	static final String PASS = null;
 
-	// hanlde HTTP GET request
+	// Handle HTTP GET request
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		// Important for making sure the returned page is of HTML type
 		response.setContentType("text/html");
-		// Here is how to retrieve from URL query string, the part start with ?,
-		// then name of the parameter=value of parameter
-		// It can have mulitple parameters such as ?p1=v1&p2=v2&p3=v3 (using &
-		// to join them)
-
+		
+		// Retrieve query parameter
 		String query = request.getParameter("query");
 
 		PrintWriter out = response.getWriter();
+		
+		// DEBUG
 		System.out.println("Hello World! from HelloServlet: " + query);
 
+		// Establish HTML document for printing
 		out.println("<!DOCTYPE html><html><body><ul>");
 		Connection conn = null;
 		Statement stmt = null;
 
 		try {
-			// STEP 2: Register JDBC driver
+			// Register JDBC driver
 			Class.forName(JDBC_DRIVER);
 			System.out.println("JDBC_DRIVER registered");
 
-			// STEP 3: Open a connection
+			// Open a connection
 			System.out.println("Connecting to database...");
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
-			// STEP 4: Execute a query
+			// Execute a query
 			System.out.println("Creating statement...");
 			stmt = conn.createStatement();
 			String sql;
 			sql = "SELECT id, name FROM task";
 			ResultSet rs = stmt.executeQuery(sql);
 
-			// STEP 5: Extract data from result set
+			// Extract data from result set
 			while (rs.next()) {
 				// Retrieve by column name
 				int id = rs.getInt("id");
@@ -83,7 +86,7 @@ public class SimpleServlet extends HttpServlet {
 				out.print(", Name: " + name);
 				out.print("</li>");
 			}
-			// STEP 6: Clean-up environment
+			// Clean-up environment
 			rs.close();
 			stmt.close();
 			conn.close();
@@ -94,33 +97,33 @@ public class SimpleServlet extends HttpServlet {
 			// Handle errors for Class.forName
 			e.printStackTrace();
 		} finally {
-			// finally block used to close resources
+			// Close resources
 			System.out.println("Closing resources...");
 			try {
 				if (stmt != null)
 					stmt.close();
 			} catch (SQLException se2) {
-			} // nothing we can do
+			}
 			try {
 				if (conn != null)
 					conn.close();
 			} catch (SQLException se) {
 				se.printStackTrace();
-			} // end finally try
-		} // end try
+			}
+		}
 		System.out.println("Goodbye!");
 		out.println("</ul></body></html>");
 		out.flush();
 		out.close();
-
 	}
 
-	// hanlde HTTP POST request
+	// Handle HTTP POST request
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
+		
 		int taskId; // For use later
-		// Retreiving user values from page
+		// Retrieving user values from page
 		String userTaskName = request.getParameter("Task");
 		String userFirstName = request.getParameter("First Name");
 		String userLastName = request.getParameter("Last Name");
@@ -134,18 +137,18 @@ public class SimpleServlet extends HttpServlet {
 		Statement stmt = null;
 
 		try {
-			// STEP 2: Register JDBC driver
+			// Register JDBC driver
 			Class.forName(JDBC_DRIVER);
 			System.out.println("JDBC_DRIVER registered...");
 
-			// STEP 3: Open a connection
+			// Open a connection
 			System.out.println("Connecting to database...");
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
-			// STEP 4: Execute a query
+			// Execute a query
 			System.out.println("Creating statement...");
 			stmt = conn.createStatement();
-			// We want to get the last ID number
+
 			String sql;
 			ResultSet rs;
 
@@ -168,7 +171,7 @@ public class SimpleServlet extends HttpServlet {
 
 			System.out.println("SELECT successful...");
 
-			// STEP 5: Extract data from result set
+			// Extract data from result set
 			while (rs.next()) {
 				// Retrieve by column name
 				int fetchedId = rs.getInt("id");
@@ -184,7 +187,7 @@ public class SimpleServlet extends HttpServlet {
 				out.print(", " + fetchedFirstName);
 				out.print("</li>");
 			}
-			// STEP 6: Clean-up environment
+			// Clean-up environment
 			rs.close();
 			stmt.close();
 			conn.close();
@@ -195,20 +198,20 @@ public class SimpleServlet extends HttpServlet {
 			// Handle errors for Class.forName
 			e.printStackTrace();
 		} finally {
-			// finally block used to close resources
+			// Close resources
 			System.out.println("Closing resources...");
 			try {
 				if (stmt != null)
 					stmt.close();
 			} catch (SQLException se2) {
-			} // nothing we can do
+			}
 			try {
 				if (conn != null)
 					conn.close();
 			} catch (SQLException se) {
 				se.printStackTrace();
-			} // end finally try
-		} // end try
+			}
+		}
 		
 		// Close html
 		out.println("</ul></body></html>");

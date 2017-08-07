@@ -19,42 +19,42 @@ public class ResultSetToArrayServlet extends HttpServlet {
 	// Database credentials
 	static final String USER = null;
 	static final String PASS = null;
-	
+
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
-		
+
 		out.println("<!DOCTYPE html><html><body><p>");
-		
+
 		Connection conn = null;
 		Statement stmt = null;
-		
+
 		try {
 			// Register JDBC driver
 			Class.forName(JDBC_DRIVER);
 			System.out.println("JDBC_DRIVER registered...");
-			
+
 			// Open connection
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);
-			
+
 			// Execute query
 			System.out.println("Creating statement...");
 			stmt = conn.createStatement();
 			String sql;
 			sql = "SELECT * FROM task";
 			ResultSet rs = stmt.executeQuery(sql);
-			
+
 			// Conversions
 			ArrayList<Hashtable<String, Object>> list = toList(rs);
 			Gson gson = new Gson();
 			out.print(gson.toJson(list) + "</p></body></html>");
-			
+
 			// Clean-up
 			rs.close();
 			stmt.close();
 			conn.close();
-			
+
 		} catch (SQLException se) {
 			// Handle errors for JDBC
 			se.printStackTrace();
