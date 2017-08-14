@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" href="css/my.css" />
+</head>
+
+<body>
+	<h2>Manage My Tasks</h2>
+
+	<h3>Add New Task:</h3>
+	<form action="/task/POST" method="post">
+		Task:<input type="text" name="task-name" /> First Name:<input
+			type="text" name="first-name" /> Last Name: <input type="text"
+			name="last-name" /> <input type="submit" onclick="update(event)"
+			value="Add" />
+	</form>
+
+	<h3>Task List:</h3>
+	<ul class="task-list"></ul>
+
+	<!-- import jQuery library -->
+	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script th:inline="javascript">
+	/*<![CDATA[*/
+		function get() {
+			$.ajax({
+				type : "GET",
+				url : "/task/GET",
+				success : getCallback
+			});
+		}
+
+		function update(event) {
+			event.preventDefault();
+			$.ajax({
+				type : "POST",
+				url : "/task/POST",
+				success : postCallback,
+				data : $("form").serialize()
+			});
+		}
+
+		function getCallback(data) {
+			var json = data;
+			$(".task-list").html("");
+
+			for (var i = 0; i < json.length; i++) {
+				$(".task-list").append(
+						"<li><a onclick='del(this)' href='#' id='" + json[i].id
+								+ "'>Delete</a>" + " ID: " + json[i].id
+								+ " ; TASKNAME: " + json[i].taskName
+								+ "; OWNER: " + json[i].lastName + ", "
+								+ json[i].firstName + "</li>");
+			}
+		}
+
+		function postCallback(data) {
+			get();
+		}
+
+		function del(data) {
+			// Fetch id of task to delete through url
+			var url = "/task/DEL?id=" + data.id;
+			alert(url);
+			$.ajax({
+				type : "DELETE",
+				url : url,
+				success : delCallback
+			});
+			event.preventDefault();
+		}
+
+		function delCallback(data) {
+			get();
+		}
+		
+		get();
+		 /*]]>*/
+	</script>
+</body>
+</html>
